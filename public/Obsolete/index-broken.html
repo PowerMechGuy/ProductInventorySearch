@@ -368,6 +368,8 @@ display:inline-block;
       <input type="checkbox" onchange="checkboxfunction(this)" id="wireless" name="category" value=18 checked>
       <label for="wireless">Wireless</label>
   </div>
+  <!-- <div id="paypal-button-container" style="display:none;"></div> -->
+  <div id="paypal-button-container"></div>
   <div id="imported"></div>
 
   <script>
@@ -377,6 +379,8 @@ display:inline-block;
    
 
     //Global Variables
+    //var activePrice = "";
+    
      var categoryDictionary = {
         0 : "accessories",
         1 : "adapters",
@@ -626,9 +630,67 @@ function showmore(obj){
 //make the panel
     new fabric['Panel']($('#ms-PanelSettings')[0]);
 
-	//Generate PayPal Button with Imported Function
+    //Generate PayPal Button with Imported Function
+    //generateButton(title, price.replace('$', ''));
     generateButton(title);
     
+    console.log("Active Price: " + price.replace('$', '');
+    
+    //activePrice = price.replace('$', '');
+    
+    /*paypal
+        .Buttons({
+          // Sets up the transaction when a payment button is clicked
+          createOrder() {
+            return fetch("/my-server/create-paypal-order", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              // use the "body" param to optionally pass additional order information
+              // like product skus and quantities
+              body: JSON.stringify({
+                cart: [
+                  {
+                    sku: title,
+                    quantity: 1,
+                  },
+                ],
+              }),
+            })
+              .then((response) => response.json())
+              .then((order) => order.id);
+          },
+          // Finalize the transaction after payer approval
+          onApprove(data) {
+            return fetch("/my-server/capture-paypal-order", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                orderID: data.orderID,
+              }),
+            })
+              .then((response) => response.json())
+              .then((orderData) => {
+                // Successful capture! For dev/demo purposes:
+                console.log(
+                  "Capture result",
+                  orderData,
+                  JSON.stringify(orderData, null, 2)
+                );
+                const transaction = orderData.purchase_units[0].payments.captures[0];
+                alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                // When ready to go live, remove the alert and show a success message within this page. For example:
+                // var element = document.getElementById('paypal-button-container');
+                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                // Or go to another URL:  actions.redirect('thank_you.html');
+              });
+          },
+        })
+        .render("#custom-paypal-button-container");*/
+
 
 }
 
@@ -659,7 +721,62 @@ function pcm_processing(){
 document.addEventListener("mousedown", pcm_processing);
 
   </script>
-
+  <script>
+      paypal
+        .Buttons({
+          // Sets up the transaction when a payment button is clicked
+          createOrder() {
+            return fetch("/my-server/create-paypal-order", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              // use the "body" param to optionally pass additional order information
+              // like product skus and quantities
+              body: JSON.stringify({
+                cart: [
+                  {
+                    sku: "YOUR_PRODUCT_STOCK_KEEPING_UNIT",
+                    quantity: "YOUR_PRODUCT_QUANTITY",
+                  },
+                ],
+              }),
+            })
+              .then((response) => response.json())
+              .then((order) => order.id);
+          },
+          // Finalize the transaction after payer approval
+          onApprove(data) {
+            return fetch("/my-server/capture-paypal-order", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                orderID: data.orderID,
+              }),
+            })
+              .then((response) => response.json())
+              .then((orderData) => {
+                // Successful capture! For dev/demo purposes:
+                console.log(
+                  "Capture result",
+                  orderData,
+                  JSON.stringify(orderData, null, 2)
+                );
+                const transaction = orderData.purchase_units[0].payments.captures[0];
+                alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                // When ready to go live, remove the alert and show a success message within this page. For example:
+                // var element = document.getElementById('paypal-button-container');
+                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                // Or go to another URL:  actions.redirect('thank_you.html');
+              });
+          },
+        })
+        .render("#paypal-button-container");
+    </script>
+	<!-- Generate Paypal Buttons -->
+	<!-- <script scr="generate-paypal-buttons.js"></script> -->
 
 </body>
 

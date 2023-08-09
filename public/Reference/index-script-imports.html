@@ -609,8 +609,6 @@ function showmore(obj){
         pnl = pnl + '                     <div style="width:300px;height:300px;background-image:url(' + image + ');background-repeat: no-repeat;background-size: 300px auto;position:relative;"><div style="color:#fff;background-color:rgba(0,0,0,0.7);width: 50%;padding: 20px;position: absolute;bottom: 30px;">' + price + '<br><b><i>' + cat + '</i></b></div></div>' + buynow + '<div style="text-align:justify;margin-top:15px;">'+ desc + '</div>';
         //messagebar
         //pnl = pnl + '                     <div class="ms-MessageBar ms-MessageBar--warning"><div class="ms-MessageBar-content"><div class="ms-MessageBar-icon"><i class="ms-Icon ms-Icon--Info"></i></div><div class="ms-MessageBar-text">Update the internal name of this section:</div></div></div>';
-        pnl = pnl + '                        <div id="custom-paypal-button-container">';
-        pnl = pnl + '                        </div>';
         pnl = pnl + '              <br clear="all">';
         pnl = pnl + '                        <div class="pcm_panel_main" style="height:300px;">';
         pnl = pnl + '                        </div>';
@@ -626,9 +624,7 @@ function showmore(obj){
 //make the panel
     new fabric['Panel']($('#ms-PanelSettings')[0]);
 
-	//Generate PayPal Button with Imported Function
-    generateButton(title);
-    
+
 
 }
 

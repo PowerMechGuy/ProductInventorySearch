@@ -8,7 +8,6 @@ const base = "https://api-m.sandbox.paypal.com";
  * @see https://developer.paypal.com/docs/api/orders/v2/#orders_create
  */
 export async function createOrder() {
-	//const extractedValue = activePrice;
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
   const response = await fetch(url, {
@@ -20,13 +19,13 @@ export async function createOrder() {
     body: JSON.stringify({
       intent: "CAPTURE",
       purchase_units: [
-      {
-      	amount: {
-      		currency_code: "USD",
-      		value: "88.92",
-  		},
-		},
-	 ],
+        {
+          amount: {
+            currency_code: "USD",
+            value: "100.00",
+          },
+        },
+      ],
     }),
   });
 
